@@ -1,5 +1,5 @@
 /*
- * AWS IoT Device SDK for Embedded C 202103.00
+ * AWS IoT Device SDK for Embedded C 202108.00
  * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -153,6 +153,10 @@
  * Please see more details about the ALPN protocol for AWS IoT MQTT endpoint
  * in the link below.
  * https://aws.amazon.com/blogs/iot/mqtt-with-tls-client-authentication-on-port-443-why-it-is-useful-and-how-it-works/
+ *
+ * @note OpenSSL requires that the protocol string passed to it for configuration be encoded
+ * with the prefix of 8-bit length information of the string. Thus, the 14 byte (0x0e) length
+ * information is prefixed to the string.
  */
 #define AWS_IOT_MQTT_ALPN               "\x0ex-amzn-mqtt-ca"
 
@@ -164,6 +168,10 @@
 /**
  * @brief This is the ALPN (Application-Layer Protocol Negotiation) string
  * required by AWS IoT for password-based authentication using TCP port 443.
+ *
+ * @note OpenSSL requires that the protocol string passed to it for configuration
+ * be encoded with the prefix of 8-bit length information of the string. Thus, the
+ * 4 byte (0x04) length information is prefixed to the string.
  */
 #define AWS_IOT_PASSWORD_ALPN           "\x04mqtt"
 
@@ -877,7 +885,7 @@ static void updateSubAckStatus( MQTTPacketInfo_t * pPacketInfo )
     ( void ) mqttStatus;
 
     /* Demo only subscribes to one topic, so only one status code is returned. */
-    globalSubAckStatus = pPayload[ 0 ];
+    globalSubAckStatus = ( MQTTSubAckStatus_t ) pPayload[ 0 ];
 }
 
 /*-----------------------------------------------------------*/
@@ -1560,6 +1568,9 @@ int main( int argc,
 
                 /* If TLS session is established, execute Subscribe/Publish loop. */
                 returnStatus = subscribePublishLoop( &mqttContext );
+
+                /* End TLS session, then close TCP connection. */
+                ( void ) Openssl_Disconnect( &networkContext );
             }
 
             if( returnStatus == EXIT_SUCCESS )
@@ -1567,9 +1578,6 @@ int main( int argc,
                 /* Log message indicating an iteration completed successfully. */
                 LogInfo( ( "Demo completed successfully." ) );
             }
-
-            /* End TLS session, then close TCP connection. */
-            ( void ) Openssl_Disconnect( &networkContext );
 
             LogInfo( ( "Short delay before starting the next iteration....\n" ) );
             sleep( MQTT_SUBPUB_LOOP_DELAY_SECONDS );

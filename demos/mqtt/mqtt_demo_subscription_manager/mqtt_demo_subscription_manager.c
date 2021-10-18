@@ -1,5 +1,5 @@
 /*
- * AWS IoT Device SDK for Embedded C 202103.00
+ * AWS IoT Device SDK for Embedded C 202108.00
  * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -950,7 +950,7 @@ static int subscribeToAndRegisterTopicFilter( MQTTContext_t * pContext,
                                               SubscriptionManagerCallback_t callback )
 {
     int returnStatus = EXIT_SUCCESS;
-    SubscriptionManagerStatus_t managerStatus = 0u;
+    SubscriptionManagerStatus_t managerStatus = ( SubscriptionManagerStatus_t ) 0u;
 
     /* Register the topic filter and its callback with subscription manager.
      * On an incoming PUBLISH message whose topic name that matches the topic filter
@@ -1045,10 +1045,12 @@ static int publishToTopicAndProcessIncomingMessage( MQTTContext_t * pMqttContext
     int returnStatus = EXIT_SUCCESS;
 
     MQTTStatus_t mqttStatus = MQTTSuccess;
-    MQTTPublishInfo_t publishInfo = { 0 };
+    MQTTPublishInfo_t publishInfo;
     uint16_t pubPacketId = MQTT_PACKET_ID_INVALID;
 
     assert( pMqttContext != NULL );
+
+    ( void ) memset( &publishInfo, 0x00, sizeof( MQTTPublishInfo_t ) );
 
     if( returnStatus == EXIT_FAILURE )
     {
@@ -1365,6 +1367,9 @@ int main( int argc,
         {
             /* If TLS session is established, execute Subscribe/Publish loop. */
             returnStatus = subscribePublishLoop( &mqttContext );
+
+            /* End TLS session, then close TCP connection. */
+            ( void ) Openssl_Disconnect( &networkContext );
         }
 
         if( returnStatus == EXIT_SUCCESS )
@@ -1372,9 +1377,6 @@ int main( int argc,
             /* Log message indicating an iteration completed successfully. */
             LogInfo( ( "Demo completed successfully." ) );
         }
-
-        /* End TLS session, then close TCP connection. */
-        ( void ) Openssl_Disconnect( &networkContext );
 
         LogInfo( ( "Short delay (of %u seconds) before starting the next iteration ....\n",
                    MQTT_SUBPUB_LOOP_DELAY_SECONDS ) );

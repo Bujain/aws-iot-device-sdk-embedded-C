@@ -1,5 +1,5 @@
 /*
- * AWS IoT Device SDK for Embedded C 202103.00
+ * AWS IoT Device SDK for Embedded C 202108.00
  * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -102,6 +102,10 @@
  * Please see more details about the ALPN protocol for AWS IoT MQTT endpoint
  * in the link below.
  * https://aws.amazon.com/blogs/iot/mqtt-with-tls-client-authentication-on-port-443-why-it-is-useful-and-how-it-works/
+ *
+ * @note OpenSSL requires that the protocol string passed to it for configuration be encoded
+ * with the prefix of 8-bit length information of the string. Thus, the 14 byte (0x0e) length
+ * information is prefixed to the string.
  */
 #define ALPN_PROTOCOL_NAME           "\x0ex-amzn-mqtt-ca"
 
@@ -595,7 +599,7 @@ int EstablishMqttSession( MQTTEventCallback_t eventCallback )
 
     /* Initialize the mqtt context and network context. */
     ( void ) memset( pMqttContext, 0U, sizeof( MQTTContext_t ) );
-    ( void ) memset( pMqttContext, 0U, sizeof( NetworkContext_t ) );
+    ( void ) memset( pNetworkContext, 0U, sizeof( NetworkContext_t ) );
 
     returnStatus = connectToServerWithBackoffRetries( pNetworkContext );
 

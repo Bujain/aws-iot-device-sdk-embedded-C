@@ -1,5 +1,5 @@
 /*
- * AWS IoT Device SDK for Embedded C 202103.00
+ * AWS IoT Device SDK for Embedded C 202108.00
  * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -53,6 +53,12 @@
 #include "logging_stack.h"
 
 /************ End of logging configuration ****************/
+
+/* *INDENT-OFF* */
+#ifdef __cplusplus
+    extern "C" {
+#endif
+/* *INDENT-ON* */
 
 /* Include MQTT library. */
 #include "core_mqtt.h"
@@ -139,5 +145,11 @@ SubscriptionManagerStatus_t SubscriptionManager_RegisterCallback( const char * p
 void SubscriptionManager_RemoveCallback( const char * pTopicFilter,
                                          uint16_t topicFilterLength );
 
+
+/* *INDENT-OFF* */
+#ifdef __cplusplus
+    }
+#endif
+/* *INDENT-ON* */
 
 #endif /* ifndef MQTT_SUBSCRIPTION_MANAGER_H_ */

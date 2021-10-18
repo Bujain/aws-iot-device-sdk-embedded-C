@@ -1,5 +1,5 @@
 /*
- * AWS IoT Device SDK for Embedded C 202103.00
+ * AWS IoT Device SDK for Embedded C 202108.00
  * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -21,6 +21,12 @@
  */
 #ifndef _DEMO_HELPER_FUNCTIONS_
 #define _DEMO_HELPER_FUNCTIONS_
+
+/* *INDENT-OFF* */
+#ifdef __cplusplus
+    extern "C" {
+#endif
+/* *INDENT-ON* */
 
 /**
  * @file demo_helpers.h
@@ -77,15 +83,15 @@ void end( CK_SESSION_HANDLE session,
 
 /*
  * @brief This function is simply a helper function to print the raw hex values
- * of an EC public key. It's explanation is not within the scope of the demos
+ * of an EC public key. Its explanation is not within the scope of the demos
  * and is sparsely commented.
  *
- * @param[in] pcDescription         Description message
- * @param[in] pucData               Hex contents to print (Public key)
- * @param[in] ulDataLength          Length of pucData
+ * @param[in] description         Description message
+ * @param[in] data                Hex contents to print (Public key)
+ * @param[in] dataLength          Length of data
  *
  */
-void writeHexBytesToConsole( char * description,
+void writeHexBytesToConsole( const char * description,
                              CK_BYTE * data,
                              CK_ULONG dataLength );
 /*-----------------------------------------------------------*/
@@ -100,5 +106,11 @@ CK_RV exportPublicKey( CK_SESSION_HANDLE session,
                        CK_BYTE ** derPublicKey,
                        CK_ULONG * derPublicKeyLength );
 /*-----------------------------------------------------------*/
+
+/* *INDENT-OFF* */
+#ifdef __cplusplus
+    }
+#endif
+/* *INDENT-ON* */
 
 #endif /* _DEMO_HELPER_FUNCTIONS_ */

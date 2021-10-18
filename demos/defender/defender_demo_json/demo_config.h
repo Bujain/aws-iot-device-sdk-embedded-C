@@ -1,5 +1,5 @@
 /*
- * AWS IoT Device SDK for Embedded C 202103.00
+ * AWS IoT Device SDK for Embedded C 202108.00
  * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -192,6 +192,22 @@
  * defender report.
  */
 #define ESTABLISHED_CONNECTIONS_ARRAY_SIZE     10
+
+/**
+ * @brief Size of the CPU userspace usage array.
+ *
+ * A maximum of these many CPUs will be counted for custom metrics in the
+ * device defender report.
+ */
+#define CPU_USER_USAGE_ARRAY_SIZE              10
+
+/**
+ * @brief Size of the network interface names and addresses arrays.
+ *
+ * A maximum of these many network interfaces will be counted for custom
+ * metrics in the device defender report.
+ */
+#define NETWORK_INTERFACE_ARRAY_SIZE           10
 
 /**
  * @brief Size of the buffer which contains the generated device defender report.

@@ -1,5 +1,5 @@
 /*
- * AWS IoT Device SDK for Embedded C 202103.00
+ * AWS IoT Device SDK for Embedded C 202108.00
  * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -136,7 +136,7 @@ CK_RV PKCS11ManagementAndRNGDemo( void )
      * slot ids. */
     if( result == CKR_OK )
     {
-        slotId = malloc( sizeof( CK_SLOT_ID ) * ( slotCount ) );
+        slotId = ( CK_SLOT_ID * ) malloc( sizeof( CK_SLOT_ID ) * ( slotCount ) );
 
         if( slotId == NULL )
         {

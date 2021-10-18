@@ -1,5 +1,5 @@
 /*
- * AWS IoT Device SDK for Embedded C 202103.00
+ * AWS IoT Device SDK for Embedded C 202108.00
  * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -298,7 +298,7 @@ static void deleteRejectedHandler( MQTTPublishInfo_t * pPublishInfo )
      */
 
     /* Make sure the payload is a valid json document. */
-    result = JSON_Validate( pPublishInfo->pPayload,
+    result = JSON_Validate( ( const char * ) pPublishInfo->pPayload,
                             pPublishInfo->payloadLength );
 
     if( result == JSONSuccess )
@@ -372,7 +372,7 @@ static void updateDeltaHandler( MQTTPublishInfo_t * pPublishInfo )
      */
 
     /* Make sure the payload is a valid json document. */
-    result = JSON_Validate( pPublishInfo->pPayload,
+    result = JSON_Validate( ( const char * ) pPublishInfo->pPayload,
                             pPublishInfo->payloadLength );
 
     if( result == JSONSuccess )
@@ -499,7 +499,7 @@ static void updateAcceptedHandler( MQTTPublishInfo_t * pPublishInfo )
      */
 
     /* Make sure the payload is a valid json document. */
-    result = JSON_Validate( pPublishInfo->pPayload,
+    result = JSON_Validate( ( const char * ) pPublishInfo->pPayload,
                             pPublishInfo->payloadLength );
 
     if( result == JSONSuccess )

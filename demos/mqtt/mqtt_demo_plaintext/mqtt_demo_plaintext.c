@@ -1,5 +1,5 @@
 /*
- * AWS IoT Device SDK for Embedded C 202103.00
+ * AWS IoT Device SDK for Embedded C 202108.00
  * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -479,7 +479,7 @@ static void updateSubAckStatus( MQTTPacketInfo_t * pPacketInfo )
     ( void ) mqttStatus;
 
     /* Demo only subscribes to one topic, so only one status code is returned. */
-    globalSubAckStatus = pPayload[ 0 ];
+    globalSubAckStatus = ( MQTTSubAckStatus_t ) pPayload[ 0 ];
 }
 
 /*-----------------------------------------------------------*/
@@ -1064,6 +1064,9 @@ int main( int argc,
         {
             /* If TCP connection is successful, execute Subscribe/Publish loop. */
             returnStatus = subscribePublishLoop( &mqttContext );
+
+            /* Close the TCP connection.  */
+            ( void ) Plaintext_Disconnect( &networkContext );
         }
 
         if( returnStatus == EXIT_SUCCESS )
@@ -1071,9 +1074,6 @@ int main( int argc,
             /* Log message indicating an iteration completed successfully. */
             LogInfo( ( "Demo completed successfully." ) );
         }
-
-        /* Close the TCP connection.  */
-        ( void ) Plaintext_Disconnect( &networkContext );
 
         LogInfo( ( "Short delay before starting the next iteration....\n" ) );
         sleep( MQTT_SUBPUB_LOOP_DELAY_SECONDS );
