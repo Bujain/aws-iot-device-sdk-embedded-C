@@ -1372,6 +1372,10 @@ static OtaMqttStatus_t mqttPublish( const char * const pacTopic,
 
             otaRet = OtaMqttPublishFailed;
         }
+        else{
+            LogError(("Received ack for publish.", "errno=%s", strerror(errno)));
+
+        }
     }
 
     return otaRet;
