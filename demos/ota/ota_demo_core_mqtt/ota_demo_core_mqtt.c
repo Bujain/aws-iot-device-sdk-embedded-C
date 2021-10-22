@@ -1327,7 +1327,7 @@ static OtaMqttStatus_t mqttPublish( const char * const pacTopic,
     publishInfo.pPayload = pMsg;
     publishInfo.payloadLength = msgSize;
 
-    LogInfo(("payload : %s", pMsg));
+    LogInfo(("payload : %s, qos : %d", pMsg, qos));
 
     if( pthread_mutex_lock( &mqttMutex ) == 0 )
     {
@@ -1353,6 +1353,8 @@ static OtaMqttStatus_t mqttPublish( const char * const pacTopic,
         otaRet = OtaMqttPublishFailed;
     }
 
+    LogInfo(("payload : %s, qos : %d, publish status: %d", pMsg, qos, mqttStatus ));
+    
     if( ( mqttStatus == MQTTSuccess ) && ( qos == 1 ) )
     {
         /* Calculate relative interval as current time plus number of seconds. */
@@ -1364,8 +1366,6 @@ static OtaMqttStatus_t mqttPublish( const char * const pacTopic,
             continue;
         }
 
-        LogError(("Received ack for publish.", strerror(errno)));
-
         if( ret == -1 )
         {
             LogError( ( "Failed to receive ack for publish."
@@ -1375,7 +1375,7 @@ static OtaMqttStatus_t mqttPublish( const char * const pacTopic,
             otaRet = OtaMqttPublishFailed;
         }
         else{
-            
+
             LogError(("Received ack for publish. Payload : %s", pMsg));
 
         }
