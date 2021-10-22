@@ -1327,6 +1327,8 @@ static OtaMqttStatus_t mqttPublish( const char * const pacTopic,
     publishInfo.pPayload = pMsg;
     publishInfo.payloadLength = msgSize;
 
+    LogInfo(("payload : %s", pMsg));
+    
     if( pthread_mutex_lock( &mqttMutex ) == 0 )
     {
         mqttStatus = MQTT_Publish( pMqttContext,
