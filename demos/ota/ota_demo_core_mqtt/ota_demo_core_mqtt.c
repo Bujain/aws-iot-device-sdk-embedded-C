@@ -1328,7 +1328,7 @@ static OtaMqttStatus_t mqttPublish( const char * const pacTopic,
     publishInfo.payloadLength = msgSize;
 
     LogInfo(("payload : %s", pMsg));
-    
+
     if( pthread_mutex_lock( &mqttMutex ) == 0 )
     {
         mqttStatus = MQTT_Publish( pMqttContext,
@@ -1375,7 +1375,8 @@ static OtaMqttStatus_t mqttPublish( const char * const pacTopic,
             otaRet = OtaMqttPublishFailed;
         }
         else{
-            LogError(("Received ack for publish.", "errno=%s", strerror(errno)));
+            
+            LogError(("Received ack for publish. Payload : %s", pMsg));
 
         }
     }
