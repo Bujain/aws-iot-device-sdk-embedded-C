@@ -111,7 +111,7 @@
  */
 #ifndef ROOT_CA_CERT_PATH_HTTP
     #define ROOT_CA_CERT_PATH_HTTP    \
-    "-----BEGIN CERTIFICATE-----\n"                                      \
+    "-----BEGIN CERTIFICATE-----\n" \
     "MIIDQTCCAimgAwIBAgITBmyfz5m/jAo54vB4ikPmljZbyjANBgkqhkiG9w0BAQsF\n" \
     "ADA5MQswCQYDVQQGEwJVUzEPMA0GA1UEChMGQW1hem9uMRkwFwYDVQQDExBBbWF6\n" \
     "b24gUm9vdCBDQSAxMB4XDTE1MDUyNjAwMDAwMFoXDTM4MDExNzAwMDAwMFowOTEL\n" \
@@ -129,8 +129,8 @@
     "N+gDS63pYaACbvXy8MWy7Vu33PqUXHeeE6V/Uq2V8viTO96LXFvKWlJbYK8U90vv\n" \
     "o/ufQJVtMVT8QtPHRh8jrdkPSHCa2XV4cdFyQzR1bldZwgJcJmApzyMZFo6IQ6XU\n" \
     "5MsI+yMRQ+hDKXJioaldXgjUkK642M4UwtBV8ob2xJNDd2ZhwLnoQdeXeGADbkpy\n" \
-    "rqXRfboQnoZsG4q5WTP468SQvvG5\n"                                     \
-    "-----END CERTIFICATE-----"
+    "rqXRfboQnoZsG4q5WTP468SQvvG5\n" \
+    "-----END CERTIFICATE-----\n";
 #endif
 
 /**
